@@ -1,12 +1,13 @@
 #include "generation.h"
 
-Generation::Generation(int y_start, int max_size) {};
+Generation::Generation(int y_start_, int max_size_) { y_start = y_start_; max_size = max_size_; };
 
 void fill_down(int x, int y_start)
 {
 	for (int i = y_start; i < y_start + 10; i++)
 	{
-
+		Earth earth(x, i);
+		earth.rendering();
 	}
 };
 
@@ -14,7 +15,7 @@ void Generation::generation_and_rendering_level()
 {
 	srand(0);
 	int y = y_start;
-	for (int i = y_start+1; i < max_size; i++)
+	for (int i = 1; i < max_size; i++)
 	{
 		if (rand() % 10 > 5)
 		{
@@ -29,6 +30,6 @@ void Generation::generation_and_rendering_level()
 		}
 		Grass grass(i, y);
 		grass.rendering();
-		fill_down(i, y);
+		fill_down(i, y+1);
 	}
 };

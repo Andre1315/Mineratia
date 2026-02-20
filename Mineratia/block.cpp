@@ -1,10 +1,10 @@
 #include "block.h"
 
 void goto_xy(int x, int y) {
-	std::cout << "\033[" << x << ";" << y << "H";
+	std::cout << "\033[" << y << ";" << x << "H";
 }
 
-Block::Block(int x, int y, std::string texture) {}
+Block::Block(int x_, int y_, std::string texture_) { x = x_; y = y_; texture = texture_; }
 
 void Block::rendering()
 {

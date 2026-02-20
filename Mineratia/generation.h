@@ -8,6 +8,6 @@ public:
 
 	void generation_and_rendering_level();
 
-	int y_start = 20;
-	int max_size = 10;
+	int y_start;
+	int max_size;
 };

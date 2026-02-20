@@ -1,3 +1,5 @@
+#pragma once
+
 #include <vector>
 #include <string>
 #include <iostream>
@@ -5,11 +7,12 @@
 class Block
 {
 public:
-	Block(int x = 0, int y = 0, std::string texture);
+	Block(int x, int y, std::string texture);
 
 	void rendering();
 
-protected:
-	int x, y;
+private:
+	int x;
+	int y;
 	std::string texture;
 };
