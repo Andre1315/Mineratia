@@ -30,6 +30,12 @@
     <ClCompile Include="generation.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="sheep.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="animal.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -45,6 +51,12 @@
       <Filter>Исходные файлы</Filter>
     </ClInclude>
     <ClInclude Include="generation.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="sheep.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="animal.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
   </ItemGroup>

@@ -13,6 +13,7 @@ void fill_down(int x, int y_start)
 
 void Generation::generation_and_rendering_level()
 {
+	std::vector<std::vector<int>> level_();
 	srand(0);
 	int y = y_start;
 	for (int i = 1; i < max_size; i++)
@@ -32,4 +33,9 @@ void Generation::generation_and_rendering_level()
 		grass.rendering();
 		fill_down(i, y+1);
 	}
+};
+
+std::vector<std::vector<int>> Generation::get_level()
+{
+
 };
