@@ -9,7 +9,7 @@ public:
 
 	void generation_and_rendering_level();
 
-	std::vector<std::vector<int>> get_level();
+	//std::vector<std::vector<int>> get_level();
 private:
 	int y_start;
 	int max_size;
