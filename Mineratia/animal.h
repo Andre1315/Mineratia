@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include "generation.h"
 
 class Animal
 {

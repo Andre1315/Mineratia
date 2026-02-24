@@ -5,12 +5,10 @@
 class Block
 {
 public:
-	Block(int x, int y, std::string texture);
+	Block(std::string texture);
 
-	void rendering();
+	void rendering_block(int x, int y);
 
 private:
-	int x;
-	int y;
 	std::string texture;
 };

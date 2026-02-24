@@ -125,18 +125,14 @@
   <ItemGroup>
     <ClCompile Include="animal.cpp" />
     <ClCompile Include="block.cpp" />
-    <ClCompile Include="earth.cpp" />
     <ClCompile Include="generation.cpp" />
-    <ClCompile Include="grass.cpp" />
     <ClCompile Include="Mineratia.cpp" />
     <ClCompile Include="sheep.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="animal.h" />
     <ClInclude Include="block.h" />
-    <ClInclude Include="earth.h" />
     <ClInclude Include="generation.h" />
-    <ClInclude Include="grass.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="sheep.h" />
   </ItemGroup>
