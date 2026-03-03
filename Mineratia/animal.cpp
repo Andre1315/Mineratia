@@ -1,66 +1,209 @@
 #include "animal.h"
 #include <windows.h>
 
-static void goto_xy(int x, int y) {
+static void goto_xy(int x, int y)
+{
 	std::cout << "\033[" << y << ";" << x << "H";
 }
 
-Animal::Animal(int x_, int y_, std::string texture_, std::string type_) { x = x_; y = y_; texture = texture_; };
+void Animal::up_animation(std::string texture_animation)
+{
+	goto_xy(x, y - 1);
+	std::cout << texture_animation;
+	Sleep(500);
+	goto_xy(x, y - 1);
+	std::cout << " ";
+}
 
-void Animal::rendering_animal() {
+Animal::Animal(int x_, int y_, std::string texture_) { x = x_; y = y_; texture = texture_; srand(time(NULL)); };
+
+void Animal::rendering_animal()
+{
 	goto_xy(x, y);
 	std::cout << texture;
+}
+
+void Animal::rendering_animal_last()
+{
+	goto_xy(x, y);
+	std::cout << " ";
+}
+
+void Animal::physic()
+{
+	while (Generation::get_exits_block_on_xy(x, y + 1) == 0)
+	{
+		rendering_animal_last();
+		y++;
+		rendering_animal();
+		Sleep(90);
+	}
 }
 
 void Animal::move(std::string direction, int step)
 {
 	if (direction == "left")
 	{
-		for (int i = step; i > 0; i--)
+		for (int i = 0; i < step; i++)
 		{
+			rendering_animal_last();
+			int block_left = Generation::get_exits_block_on_xy(x - 1, y);
+			int block_down = Generation::get_exits_block_on_xy(x, y + 1);
+			int block_up = Generation::get_exits_block_on_xy(x, y - 1);
 
+			if (block_left != 0 && block_up == 0 && block_down != 0)
+			{
+				y--; //вверх
+				x--;
+			}
+
+			else if (block_left == 0 && block_down != 0)
+			{
+				x--;
+			}
+
+			if (block_down == 0)
+			{
+				physic();
+			}
+			rendering_animal();
+			block_left = 0;
+			block_down = 0;
+			block_up = 0;
+			Sleep(250);
 		}
 	}
 	if (direction == "right")
 	{
-		for (int i = step; i > 0; i--)
+		for (int i = 0; i < step; i++)
 		{
+			rendering_animal_last();
+			int block_right = Generation::get_exits_block_on_xy(x + 1, y);
+			int block_down = Generation::get_exits_block_on_xy(x, y + 1);
+			int block_up = Generation::get_exits_block_on_xy(x, y - 1);
 
+			if (block_right != 0 && block_up == 0 && block_down != 0)
+			{
+				y--; //вверх
+				x++;
+			}
+
+			else if (block_right == 0 && block_down != 0)
+			{
+				x++;
+			}
+
+			if (block_down == 0)
+			{
+				physic();
+			}
+			rendering_animal();
+			block_right = 0;
+			block_down = 0;
+			block_up = 0;
+			Sleep(250);
 		}
 	}
 }
 
-int Animal::get_pos()
+void Animal::move_run(std::string direction, int step)
 {
-	return x, y;
+	if (direction == "left")
+	{
+		for (int i = 0; i < step; i++)
+		{
+			rendering_animal_last();
+			int block_left = Generation::get_exits_block_on_xy(x - 1, y);
+			int block_down = Generation::get_exits_block_on_xy(x, y + 1);
+			int block_up = Generation::get_exits_block_on_xy(x, y - 1);
+
+			if (block_left != 0 && block_up == 0 && block_down != 0)
+			{
+				y--; //вверх
+				x--;
+			}
+
+			else if (block_left == 0 && block_down != 0)
+			{
+				x--;
+			}
+
+			if (block_down == 0)
+			{
+				physic();
+			}
+			rendering_animal();
+			block_left = 0;
+			block_down = 0;
+			block_up = 0;
+			Sleep(125);
+		}
+	}
+	if (direction == "right")
+	{
+		for (int i = 0; i < step; i++)
+		{
+			rendering_animal_last();
+			int block_right = Generation::get_exits_block_on_xy(x + 1, y);
+			int block_down = Generation::get_exits_block_on_xy(x, y + 1);
+			int block_up = Generation::get_exits_block_on_xy(x, y - 1);
+
+			if (block_right != 0 && block_up == 0 && block_down != 0)
+			{
+				y--; //вверх
+				x++;
+			}
+
+			else if (block_right == 0 && block_down != 0)
+			{
+				x++;
+			}
+
+			if (block_down == 0)
+			{
+				physic();
+			}
+			rendering_animal();
+			block_right = 0;
+			block_down = 0;
+			block_up = 0;
+			Sleep(125);
+		}
+	}
 }
 
-void Animal::eat()
+int Animal::get_pos(std::string arg)
 {
-	
+	if (arg == "x") return x;
+	else if (arg == "y") return y;
+	else return 0;
 }
 
-void Animal::action(bool state) {
-	srand(0);
-	while (state) {
-		Sleep(2000);
+void Animal::eat() {}
+
+void Animal::action() {
+	if (rand() % 10 > 5)
+	{
 		if (rand() % 10 > 5)
 		{
 			if (rand() % 10 > 5)
 			{
-				if (rand() % 10 > 5)
-				{
-					move("left", rand() % 10);
-				}
-				else
-				{
-					move("right", rand() % 10);
-				}
+				move("left", rand() % 10);
 			}
 			else
 			{
-				eat();
+				move("right", rand() % 10);
 			}
 		}
+		else
+		{
+			eat();
+		}
 	}
+}
+
+void Animal::death()
+{
+	texture = " ";
+	rendering_animal();
 }
