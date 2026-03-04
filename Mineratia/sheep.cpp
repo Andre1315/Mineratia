@@ -10,7 +10,7 @@ void Sheep::eat()
 		up_animation("+");
 		age++;
 		Generation::delete_block(get_pos("x"), get_pos("y") + 1);
-		Generation::add_block(get_pos("x"), get_pos("y") + 1, 2);
+		Generation::add_block(get_pos("x"), get_pos("y") + 1, 5);
 	}
 	else
 	{

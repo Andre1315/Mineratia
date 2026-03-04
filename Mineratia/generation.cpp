@@ -134,6 +134,12 @@ void Generation::add_block(int x, int y, int type)
 		stone.rendering_block(x, y);
 		level[y][x] = type;
 	}
+	if (type == 5)
+	{
+		Block earth("&");
+		earth.rendering_block(x, y);
+		level[y][x] = type;
+	}
 }
 
 void Generation::rendering_memory()
