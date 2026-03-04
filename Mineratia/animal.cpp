@@ -49,7 +49,7 @@ void Animal::move(std::string direction, int step, std::string speed)
 	if (direction == "left")
 	{
 		for (int i = 0; i < step; i++)
-		{
+		{ 
 			rendering_animal_last();
 			int block_left = Generation::get_exits_block_on_xy(x - 1, y);
 			int block_down = Generation::get_exits_block_on_xy(x, y + 1);
@@ -82,6 +82,7 @@ void Animal::move(std::string direction, int step, std::string speed)
 			block_up = 0;
 			block_up_left = 0;
 			Sleep(time);
+			if (time < 250) time += 2;
 		}
 	}
 	if (direction == "right")
@@ -120,6 +121,7 @@ void Animal::move(std::string direction, int step, std::string speed)
 			block_up = 0;
 			block_up_right = 0;
 			Sleep(time);
+			if (time < 250) time += 2;
 		}
 	}
 }
@@ -136,7 +138,7 @@ void Animal::eat() {}
 void Animal::action() {
 	if (rand() % 10 > 5)
 	{
-		if (rand() % 10 > 5)
+		if (rand() % 10 > 3)
 		{
 			if (rand() % 10 > 5)
 			{
@@ -160,4 +162,6 @@ void Animal::death()
 {
 	texture = " ";
 	rendering_animal();
+	x = 0;
+	y = 0;
 }

@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 #include "generation.h"
 #include "sheep.h"
+#include "wolf.h"
 
 int main()
 {
@@ -19,14 +20,28 @@ int main()
 	Sheep sheep_Olga(5, 15);
 	sheep_Olga.rendering_animal();
 
+	Wolf wolf_Oleg(15, 15);
+	wolf_Oleg.rendering_animal();
+
 	int age_sheep = sheep_Olga.get_age();
-	while (age_sheep < 6)
+	int pos_sheep = sheep_Olga.get_pos("x") + sheep_Olga.get_pos("y");
+	while (age_sheep < 6 && pos_sheep != 0)
 	{
 		sheep_Olga.physic();
+		wolf_Oleg.physic();
 
 		sheep_Olga.action();
+		sheep_Olga.rendering_animal();
+		wolf_Oleg.action();
+		wolf_Oleg.rendering_animal();
+
+		if (wolf_Oleg.get_eat_state() == 1)
+		{
+			wolf_Oleg.eat_sheep(sheep_Olga);
+		}
 
 		age_sheep = sheep_Olga.get_age();
+		int pos_sheep = sheep_Olga.get_pos("x") + sheep_Olga.get_pos("y");
 		Sleep(4000);
 	}
 

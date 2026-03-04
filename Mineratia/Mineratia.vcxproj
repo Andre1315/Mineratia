@@ -128,6 +128,7 @@
     <ClCompile Include="generation.cpp" />
     <ClCompile Include="Mineratia.cpp" />
     <ClCompile Include="sheep.cpp" />
+    <ClCompile Include="wolf.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="animal.h" />
@@ -135,6 +136,7 @@
     <ClInclude Include="generation.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="sheep.h" />
+    <ClInclude Include="wolf.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Mineratia.rc" />
