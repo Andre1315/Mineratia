@@ -40,8 +40,12 @@ void Animal::physic()
 	}
 }
 
-void Animal::move(std::string direction, int step)
+void Animal::move(std::string direction, int step, std::string speed)
 {
+	int time = 0;
+	if (speed == "run") time = 125;
+	if (speed == "normal") time = 250;
+
 	if (direction == "left")
 	{
 		for (int i = 0; i < step; i++)
@@ -50,8 +54,9 @@ void Animal::move(std::string direction, int step)
 			int block_left = Generation::get_exits_block_on_xy(x - 1, y);
 			int block_down = Generation::get_exits_block_on_xy(x, y + 1);
 			int block_up = Generation::get_exits_block_on_xy(x, y - 1);
+			int block_up_left = Generation::get_exits_block_on_xy(x - 1, y - 1);
 
-			if (block_left != 0 && block_up == 0 && block_down != 0)
+			if (block_left != 0 && block_up == 0 && block_down != 0 && block_up_left == 0)
 			{
 				y--; //вверх
 				x--;
@@ -62,70 +67,9 @@ void Animal::move(std::string direction, int step)
 				x--;
 			}
 
-			if (block_down == 0)
+			else if (block_up_left != 0)
 			{
-				physic();
-			}
-			rendering_animal();
-			block_left = 0;
-			block_down = 0;
-			block_up = 0;
-			Sleep(250);
-		}
-	}
-	if (direction == "right")
-	{
-		for (int i = 0; i < step; i++)
-		{
-			rendering_animal_last();
-			int block_right = Generation::get_exits_block_on_xy(x + 1, y);
-			int block_down = Generation::get_exits_block_on_xy(x, y + 1);
-			int block_up = Generation::get_exits_block_on_xy(x, y - 1);
-
-			if (block_right != 0 && block_up == 0 && block_down != 0)
-			{
-				y--; //вверх
-				x++;
-			}
-
-			else if (block_right == 0 && block_down != 0)
-			{
-				x++;
-			}
-
-			if (block_down == 0)
-			{
-				physic();
-			}
-			rendering_animal();
-			block_right = 0;
-			block_down = 0;
-			block_up = 0;
-			Sleep(250);
-		}
-	}
-}
-
-void Animal::move_run(std::string direction, int step)
-{
-	if (direction == "left")
-	{
-		for (int i = 0; i < step; i++)
-		{
-			rendering_animal_last();
-			int block_left = Generation::get_exits_block_on_xy(x - 1, y);
-			int block_down = Generation::get_exits_block_on_xy(x, y + 1);
-			int block_up = Generation::get_exits_block_on_xy(x, y - 1);
-
-			if (block_left != 0 && block_up == 0 && block_down != 0)
-			{
-				y--; //вверх
-				x--;
-			}
-
-			else if (block_left == 0 && block_down != 0)
-			{
-				x--;
+				i = step;
 			}
 
 			if (block_down == 0)
@@ -136,7 +80,8 @@ void Animal::move_run(std::string direction, int step)
 			block_left = 0;
 			block_down = 0;
 			block_up = 0;
-			Sleep(125);
+			block_up_left = 0;
+			Sleep(time);
 		}
 	}
 	if (direction == "right")
@@ -147,8 +92,9 @@ void Animal::move_run(std::string direction, int step)
 			int block_right = Generation::get_exits_block_on_xy(x + 1, y);
 			int block_down = Generation::get_exits_block_on_xy(x, y + 1);
 			int block_up = Generation::get_exits_block_on_xy(x, y - 1);
+			int block_up_right = Generation::get_exits_block_on_xy(x + 1, y - 1);
 
-			if (block_right != 0 && block_up == 0 && block_down != 0)
+			if (block_right != 0 && block_up == 0 && block_down != 0 && block_up_right == 0)
 			{
 				y--; //вверх
 				x++;
@@ -159,6 +105,11 @@ void Animal::move_run(std::string direction, int step)
 				x++;
 			}
 
+			else if (block_up_right != 0)
+			{
+				i = step;
+			}
+
 			if (block_down == 0)
 			{
 				physic();
@@ -167,7 +118,8 @@ void Animal::move_run(std::string direction, int step)
 			block_right = 0;
 			block_down = 0;
 			block_up = 0;
-			Sleep(125);
+			block_up_right = 0;
+			Sleep(time);
 		}
 	}
 }
@@ -188,11 +140,13 @@ void Animal::action() {
 		{
 			if (rand() % 10 > 5)
 			{
-				move("left", rand() % 10);
+				int step = rand() % 100;
+				move("left", step, "normal");
 			}
 			else
 			{
-				move("right", rand() % 10);
+				int step = rand() % 100;
+				move("right", step, "normal");
 			}
 		}
 		else

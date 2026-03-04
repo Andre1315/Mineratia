@@ -14,6 +14,7 @@ int main()
 	Generation gen(y_start, max_sizeX, max_sizeY);
 	gen.set_bedrock(y_min, max_sizeX);
 	gen.generation_and_rendering_level();
+	gen.set_border();
 
 	Sheep sheep_Olga(5, 15);
 	sheep_Olga.rendering_animal();
@@ -26,7 +27,7 @@ int main()
 		sheep_Olga.action();
 
 		age_sheep = sheep_Olga.get_age();
-		Sleep(5000);
+		Sleep(4000);
 	}
 
 

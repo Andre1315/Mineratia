@@ -23,6 +23,8 @@ public:
 
 	static void set_bedrock(int y, int max_size_x);
 
+	static void set_border();
+
 	static void rendering_memory();
 
 	~Generation();

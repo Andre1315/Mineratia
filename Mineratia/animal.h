@@ -14,9 +14,7 @@ public:
 
 	void action();
 
-	void move(std::string direction, int step);
-
-	void move_run(std::string direction, int step);
+	void move(std::string direction, int step, std::string speed);
 
 	int get_pos(std::string arg);
 

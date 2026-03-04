@@ -31,19 +31,41 @@ void Generation::delete_block(int x, int y)
 
 void Generation::fill_down(int x, int y_start)
 {
+	Block earth("|");
 	for (int i = y_start; get_exits_block_on_xy(x, i) != 3 ; i++)
 	{
-		Block earth("|");
 		earth.rendering_block(x, i);
 		level[i][x] = 2;
 	}
 };
 
+void Generation::set_border()
+{
+	Block border("$");
+
+	int x1 = 1;
+	int x2 = max_sizeX;
+	for (int i = 1; i < max_sizeY; i++)
+	{
+		if (get_exits_block_on_xy(x1, i) == 0)
+		{
+			border.rendering_block(x1, i);
+			level[i][x1] = 4;
+		}
+
+		if (get_exits_block_on_xy(x2, i) == 0)
+		{
+			border.rendering_block(x2, i);
+			level[i][x2] = 4;
+		}
+	}
+}
+
 void Generation::set_bedrock(int y, int max_size_x)
 {
-	for (int i = 0; i < max_size_x; i++)
+	Block bedrock("-");
+	for (int i = 1; i < max_size_x; i++)
 	{
-		Block bedrock("-");
 		bedrock.rendering_block(i, y);
 		level[y][i] = 3;
 	}
@@ -52,6 +74,8 @@ void Generation::set_bedrock(int y, int max_size_x)
 void Generation::generation_and_rendering_level()
 {
 	srand(0);
+
+	Block grass("#");
 
 	int y = y_start;
 	for (int i = 1; i < max_sizeX; i++)
@@ -69,7 +93,6 @@ void Generation::generation_and_rendering_level()
 				y--; //выше
 			}
 		}
-		Block grass("#");
 		grass.rendering_block(i, y);
 		level[y][i] = 1;
 		fill_down(i, y+1);
@@ -103,6 +126,12 @@ void Generation::add_block(int x, int y, int type)
 	{
 		Block grass("#");
 		grass.rendering_block(x, y);
+		level[y][x] = type;
+	}
+	if (type == 2)
+	{
+		Block stone("|");
+		stone.rendering_block(x, y);
 		level[y][x] = type;
 	}
 }
