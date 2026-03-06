@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "generation.h"
+#include <tuple>
 
 class Animal
 {
@@ -12,19 +13,19 @@ public:
 
 	void rendering_animal_last();
 
-	void action();
+	std::tuple<std::string, int> action();
 
-	void move(std::string direction, int step, std::string speed);
+	void move(std::string direction);
 
 	int get_pos(std::string arg);
 
-	virtual void eat();
+	virtual int eat();
 
 	void death();
 
 	void up_animation(std::string texture_animation);
 
-	void physic();
+	int physic();
 
 private:
 	int x, y;

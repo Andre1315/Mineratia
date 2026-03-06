@@ -29,100 +29,85 @@ void Animal::rendering_animal_last()
 	std::cout << " ";
 }
 
-void Animal::physic()
+int Animal::physic()
 {
-	while (Generation::get_exits_block_on_xy(x, y + 1) == 0)
+	if (Generation::get_exits_block_on_xy(x, y + 1) == 0)
 	{
-		rendering_animal_last();
 		y++;
-		rendering_animal();
-		Sleep(90);
+		return 1;
 	}
+	else return 0;
 }
 
-void Animal::move(std::string direction, int step, std::string speed)
+void Animal::move(std::string direction)
 {
-	int time = 0;
-	if (speed == "run") time = 125;
-	if (speed == "normal") time = 250;
-
-	if (direction == "left")
+	if (direction == "left" || direction == "move_left")
 	{
-		for (int i = 0; i < step; i++)
-		{ 
-			rendering_animal_last();
-			int block_left = Generation::get_exits_block_on_xy(x - 1, y);
-			int block_down = Generation::get_exits_block_on_xy(x, y + 1);
-			int block_up = Generation::get_exits_block_on_xy(x, y - 1);
-			int block_up_left = Generation::get_exits_block_on_xy(x - 1, y - 1);
+		rendering_animal_last();
+		int block_left = Generation::get_exits_block_on_xy(x - 1, y);
+		int block_down = Generation::get_exits_block_on_xy(x, y + 1);
+		int block_up = Generation::get_exits_block_on_xy(x, y - 1);
+		int block_up_left = Generation::get_exits_block_on_xy(x - 1, y - 1);
 
-			if (block_left != 0 && block_up == 0 && block_down != 0 && block_up_left == 0)
-			{
-				y--; //вверх
-				x--;
-			}
-
-			else if (block_left == 0 && block_down != 0)
-			{
-				x--;
-			}
-
-			else if (block_up_left != 0)
-			{
-				i = step;
-			}
-
-			if (block_down == 0)
-			{
-				physic();
-			}
-			rendering_animal();
-			block_left = 0;
-			block_down = 0;
-			block_up = 0;
-			block_up_left = 0;
-			Sleep(time);
-			if (time < 250) time += 2;
-		}
-	}
-	if (direction == "right")
-	{
-		for (int i = 0; i < step; i++)
+		if (block_left != 0 && block_up == 0 && block_down != 0 && block_up_left == 0)
 		{
-			rendering_animal_last();
-			int block_right = Generation::get_exits_block_on_xy(x + 1, y);
-			int block_down = Generation::get_exits_block_on_xy(x, y + 1);
-			int block_up = Generation::get_exits_block_on_xy(x, y - 1);
-			int block_up_right = Generation::get_exits_block_on_xy(x + 1, y - 1);
-
-			if (block_right != 0 && block_up == 0 && block_down != 0 && block_up_right == 0)
-			{
-				y--; //вверх
-				x++;
-			}
-
-			else if (block_right == 0 && block_down != 0)
-			{
-				x++;
-			}
-
-			else if (block_up_right != 0)
-			{
-				i = step;
-			}
-
-			if (block_down == 0)
-			{
-				physic();
-			}
-			rendering_animal();
-			block_right = 0;
-			block_down = 0;
-			block_up = 0;
-			block_up_right = 0;
-			Sleep(time);
-			if (time < 250) time += 2;
+			y--; //вверх
+			x--;
 		}
+
+		else if (block_left == 0 && block_down != 0)
+		{
+			x--;
+		}
+
+		else if (block_up_left != 0)
+		{
+
+		}
+
+		if (block_down == 0)
+		{
+			physic();
+		}
+		rendering_animal();
+		block_left = 0;
+		block_down = 0;
+		block_up = 0;
+		block_up_left = 0;	
+	}
+	if (direction == "right" || direction == "move_right")
+	{
+		rendering_animal_last();
+		int block_right = Generation::get_exits_block_on_xy(x + 1, y);
+		int block_down = Generation::get_exits_block_on_xy(x, y + 1);
+		int block_up = Generation::get_exits_block_on_xy(x, y - 1);
+		int block_up_right = Generation::get_exits_block_on_xy(x + 1, y - 1);
+
+		if (block_right != 0 && block_up == 0 && block_down != 0 && block_up_right == 0)
+		{
+			y--; //вверх
+			x++;
+		}
+
+		else if (block_right == 0 && block_down != 0)
+		{
+			x++;
+		}
+
+		else if (block_up_right != 0)
+		{
+
+		}
+
+		if (block_down == 0)
+		{
+			physic();
+		}
+		rendering_animal();
+		block_right = 0;
+		block_down = 0;
+		block_up = 0;
+		block_up_right = 0;
 	}
 }
 
@@ -133,9 +118,9 @@ int Animal::get_pos(std::string arg)
 	else return 0;
 }
 
-void Animal::eat() {}
+int Animal::eat() { return 0; }
 
-void Animal::action() {
+std::tuple<std::string, int> Animal::action() {
 	if (rand() % 10 > 5)
 	{
 		if (rand() % 10 > 3)
@@ -143,19 +128,20 @@ void Animal::action() {
 			if (rand() % 10 > 5)
 			{
 				int step = rand() % 100;
-				move("left", step, "normal");
+				return { "move_left", step };
 			}
 			else
 			{
 				int step = rand() % 100;
-				move("right", step, "normal");
+				return { "move_right", step };
 			}
 		}
 		else
 		{
-			eat();
+			return { "eat", 0 };
 		}
 	}
+	else return { "none", 0 };
 }
 
 void Animal::death()

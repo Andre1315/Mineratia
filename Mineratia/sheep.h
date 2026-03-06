@@ -8,7 +8,7 @@ class Sheep : public Animal
 public:
 	Sheep(int x, int y);
 
-	void eat() override;
+	int eat() override;
 
 	int get_age();
 private:
