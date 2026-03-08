@@ -37,16 +37,17 @@ static void move_animal(std::string type ,std::string direction_sheep, int step_
 	if (type == "normal") time = 250;
 	else if (type == "run") time = 125;
 
-	while (n_sheep != 0 && n_wolf != 0)
+	while (n_sheep != 0 || n_wolf != 0)
 	{
 		if (n_sheep != 0) 
 		{
-			sheep1.move(direction_sheep);
+			int block = sheep1.move(direction_sheep);
 			n_sheep--;
+			if (block == 1) n_sheep = 0;
 		}
 		if (n_wolf != 0)
 		{
-			wolf1.move(direction_wolf);
+			int block = wolf1.move(direction_wolf);
 			n_wolf--;
 			if (eat_state == 1)
 			{
@@ -62,6 +63,7 @@ static void move_animal(std::string type ,std::string direction_sheep, int step_
 					}
 				}
 			}
+			if (block == 1) n_wolf = 0;
 		}
 		Sleep(time);
 		if (type == "run") time += 5;

@@ -15,7 +15,7 @@ public:
 
 	std::tuple<std::string, int> action();
 
-	void move(std::string direction);
+	int move(std::string direction);
 
 	int get_pos(std::string arg);
 

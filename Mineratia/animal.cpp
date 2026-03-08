@@ -39,8 +39,9 @@ int Animal::physic()
 	else return 0;
 }
 
-void Animal::move(std::string direction)
+int Animal::move(std::string direction)
 {
+	int block = 0;
 	if (direction == "left" || direction == "move_left")
 	{
 		rendering_animal_last();
@@ -62,7 +63,7 @@ void Animal::move(std::string direction)
 
 		else if (block_up_left != 0)
 		{
-
+			block = 1;
 		}
 
 		if (block_down == 0)
@@ -96,7 +97,7 @@ void Animal::move(std::string direction)
 
 		else if (block_up_right != 0)
 		{
-
+			block = 1;
 		}
 
 		if (block_down == 0)
@@ -109,6 +110,7 @@ void Animal::move(std::string direction)
 		block_up = 0;
 		block_up_right = 0;
 	}
+	return block;
 }
 
 int Animal::get_pos(std::string arg)
@@ -121,9 +123,9 @@ int Animal::get_pos(std::string arg)
 int Animal::eat() { return 0; }
 
 std::tuple<std::string, int> Animal::action() {
-	if (rand() % 10 > 5)
+	if (rand() % 10 > 3)
 	{
-		if (rand() % 10 > 3)
+		if (rand() % 10 > 2)
 		{
 			if (rand() % 10 > 5)
 			{
