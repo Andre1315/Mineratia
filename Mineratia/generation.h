@@ -9,17 +9,19 @@ class Generation
 public:
 	Generation(int y_start, int max_sizeX, int max_sizeY);
 
+	enum block { air, grass, stone, bedrock, barrier, ground };
+
 	static void generation_and_rendering_level();
 
 	static void delete_block(int x, int y);
 
 	static void fill_down(int x, int y_start);
 
-	static int get_exits_block_on_xy(int x, int y);
+	static Generation::block get_exits_block_on_xy(int x, int y);
 
 	static void clear_memory();
 
-	static void add_block(int x, int y, int type);
+	static void add_block(int x, int y, block type);
 
 	static void set_bedrock(int y, int max_size_x);
 
@@ -27,10 +29,12 @@ public:
 
 	static void rendering_memory();
 
+	static void fill_air(int x, int y_start);
+
 	~Generation();
 private:
 	static int y_start;
 	static int max_sizeX;
 	static int max_sizeY;
-	static int** level;
+	static block** level;
 };

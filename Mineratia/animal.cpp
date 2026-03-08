@@ -45,70 +45,70 @@ int Animal::move(std::string direction)
 	if (direction == "left" || direction == "move_left")
 	{
 		rendering_animal_last();
-		int block_left = Generation::get_exits_block_on_xy(x - 1, y);
-		int block_down = Generation::get_exits_block_on_xy(x, y + 1);
-		int block_up = Generation::get_exits_block_on_xy(x, y - 1);
-		int block_up_left = Generation::get_exits_block_on_xy(x - 1, y - 1);
+		Generation::block block_left = Generation::get_exits_block_on_xy(x - 1, y);
+		Generation::block block_down = Generation::get_exits_block_on_xy(x, y + 1);
+		Generation::block block_up = Generation::get_exits_block_on_xy(x, y - 1);
+		Generation::block block_up_left = Generation::get_exits_block_on_xy(x - 1, y - 1);
 
-		if (block_left != 0 && block_up == 0 && block_down != 0 && block_up_left == 0)
+		if (block_left != Generation::block::air && block_up == Generation::block::air && block_down != Generation::block::air && block_up_left == Generation::block::air)
 		{
 			y--; //вверх
 			x--;
 		}
 
-		else if (block_left == 0 && block_down != 0)
+		else if (block_left == Generation::block::air && block_down != Generation::block::air)
 		{
 			x--;
 		}
 
-		else if (block_up_left != 0)
+		else if (block_up_left != Generation::block::air)
 		{
 			block = 1;
 		}
 
-		if (block_down == 0)
+		if (block_down == Generation::block::air)
 		{
 			physic();
 		}
 		rendering_animal();
-		block_left = 0;
-		block_down = 0;
-		block_up = 0;
-		block_up_left = 0;	
+		block_left = Generation::block::air;
+		block_down = Generation::block::air;
+		block_up = Generation::block::air;
+		block_up_left = Generation::block::air;
 	}
 	if (direction == "right" || direction == "move_right")
 	{
 		rendering_animal_last();
-		int block_right = Generation::get_exits_block_on_xy(x + 1, y);
-		int block_down = Generation::get_exits_block_on_xy(x, y + 1);
-		int block_up = Generation::get_exits_block_on_xy(x, y - 1);
-		int block_up_right = Generation::get_exits_block_on_xy(x + 1, y - 1);
+		Generation::block block_right = Generation::get_exits_block_on_xy(x + 1, y);
+		Generation::block block_down = Generation::get_exits_block_on_xy(x, y + 1);
+		Generation::block block_up = Generation::get_exits_block_on_xy(x, y - 1);
+		Generation::block block_up_right = Generation::get_exits_block_on_xy(x + 1, y - 1);
 
-		if (block_right != 0 && block_up == 0 && block_down != 0 && block_up_right == 0)
+		if (block_right != Generation::block::air && block_up == Generation::block::air && block_down != Generation::block::air && block_up_right == Generation::block::air)
 		{
 			y--; //вверх
 			x++;
 		}
 
-		else if (block_right == 0 && block_down != 0)
+		else if (block_right == Generation::block::air && block_down != Generation::block::air)
 		{
 			x++;
 		}
 
-		else if (block_up_right != 0)
+		else if (block_up_right != Generation::block::air)
 		{
 			block = 1;
 		}
 
-		if (block_down == 0)
+		if (block_down == Generation::block::air)
 		{
 			physic();
 		}
 		rendering_animal();
-		block_right = 0;
-		block_down = 0;
-		block_up = 0;
-		block_up_right = 0;
+		block_right = Generation::block::air;
+		block_down = Generation::block::air;
+		block_up = Generation::block::air;
+		block_up_right = Generation::block::air;
 	}
 	return block;
 }
