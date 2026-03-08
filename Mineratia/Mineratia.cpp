@@ -3,7 +3,7 @@
 #include "sheep.h"
 #include "wolf.h"
 
-static void physic_animal(Sheep sheep1, Wolf wolf1)
+static void physic_animal(Sheep& sheep1, Wolf& wolf1)
 {
 	int i_sheep = 1;
 	int i_wolf = 1;
@@ -28,7 +28,7 @@ static void physic_animal(Sheep sheep1, Wolf wolf1)
 	}
 }
 
-static void move_animal(std::string type ,std::string direction_sheep, int step_sheep, Sheep sheep1, std::string direction_wolf, int step_wolf, Wolf wolf1)
+static void move_animal(std::string type ,std::string direction_sheep, int step_sheep, Sheep& sheep1, std::string direction_wolf, int step_wolf, Wolf& wolf1, int eat_state)
 {
 	int n_sheep = step_sheep;
 	int n_wolf = step_wolf;
@@ -48,13 +48,27 @@ static void move_animal(std::string type ,std::string direction_sheep, int step_
 		{
 			wolf1.move(direction_wolf);
 			n_wolf--;
+			if (eat_state == 1)
+			{
+				for (int i = -1; i < 1; i++)
+				{
+					for (int j = -1; j < 1; j++)
+					{
+						if (sheep1.get_pos("x") == wolf1.get_pos("x") + i && sheep1.get_pos("y") == wolf1.get_pos("y") + j)
+						{
+							wolf1.eat_sheep(sheep1);
+							n_wolf = 0;
+						}
+					}
+				}
+			}
 		}
 		Sleep(time);
 		if (type == "run") time += 5;
 	}
 }
 
-static void eat_animal(std::string action_sheep, Sheep sheep1, std::string action_wolf, Wolf wolf1)
+static void eat_animal(std::string action_sheep, Sheep& sheep1, std::string action_wolf, Wolf& wolf1)
 {
 	if (action_sheep == "eat")
 	{
@@ -73,7 +87,7 @@ static void eat_animal(std::string action_sheep, Sheep sheep1, std::string actio
 			if (rand() % 10 > 5) direction_wolf = "left";
 			else direction_wolf = "right";
 
-			move_animal("normal", direction_sheep, step_sheep, sheep1, direction_wolf, step_wolf, wolf1);
+			move_animal("normal", direction_sheep, step_sheep, sheep1, direction_wolf, step_wolf, wolf1, 0);
 		}
 	}
 
@@ -82,21 +96,13 @@ static void eat_animal(std::string action_sheep, Sheep sheep1, std::string actio
 		int x_sheep = sheep1.get_pos("x");
 		int x_wolf = wolf1.get_pos("x");
 		std::string direction = "";
-		if (x_sheep > x_wolf) direction = "left";
-		else direction = "right";
+		if (x_sheep > x_wolf) direction = "right";
+		else direction = "left";
 
-		int step_wolf = 30;
+		int step_wolf = 40;
 		int step_sheep = 20;
 
-		move_animal("run", direction, step_sheep, sheep1, direction, step_wolf, wolf1);
-
-		for (int i = -1; i < 1; i++)
-		{
-			for (int j = -1; j < 1; j++)
-			{
-				if(sheep1.get_pos("x") == wolf1.get_pos("x") + i && sheep1.get_pos("y") == wolf1.get_pos("y") + j) wolf1.eat_sheep(sheep1);
-			}
-		}
+		move_animal("run", direction, step_sheep, sheep1, direction, step_wolf, wolf1, 1);
 	}
 }
 
@@ -144,13 +150,13 @@ int main()
 
 
 
-		if (action_sheep == "move_left" || action_sheep == "move_right" || action_wolf == "move_left" || action_wolf == "move_right") move_animal("normal", action_sheep, step_sheep, sheep_Olga, action_wolf, step_wolf, wolf_Oleg);
+		if (action_sheep == "move_left" || action_sheep == "move_right" || action_wolf == "move_left" || action_wolf == "move_right") move_animal("normal", action_sheep, step_sheep, sheep_Olga, action_wolf, step_wolf, wolf_Oleg, 0);
 		if (action_sheep == "eat" || action_wolf == "eat") eat_animal(action_sheep, sheep_Olga, action_wolf, wolf_Oleg);
 
 
 
 		age_sheep = sheep_Olga.get_age();
-		int pos_sheep = sheep_Olga.get_pos("x") + sheep_Olga.get_pos("y");
+		pos_sheep = sheep_Olga.get_pos("x") + sheep_Olga.get_pos("y");
 		Sleep(4000);
 	}
 
