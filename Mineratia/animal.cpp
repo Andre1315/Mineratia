@@ -15,7 +15,29 @@ void Animal::up_animation(std::string texture_animation)
 	std::cout << " ";
 }
 
-Animal::Animal(int x_, int y_, std::string texture_) { x = x_; y = y_; texture = texture_; srand(time(NULL)); };
+Animal::Animal(int x_, int y_, std::string texture_) {
+	x = x_;
+	y = y_;
+	texture = texture_;
+	srand(time(NULL));
+
+	//intarnal
+
+	tag hunger("hunger", "the desire to eat");
+	tag sleep("sleep", "the desire to sleep", tag::ultraLow);
+
+	//external
+
+	tag see1("see eat", "food found");
+	tag see2("see predator", "predator in sight");
+	tag danger1("danger predator's", "danger predator's", tag::ultraHight);
+
+	//constants
+
+	tag fear1("fear of heights", "fear of stepping off a cliff");
+
+	constants.AddTag(fear1);
+};
 
 void Animal::rendering_animal()
 {
@@ -122,28 +144,9 @@ int Animal::get_pos(std::string arg)
 
 int Animal::eat() { return 0; }
 
-std::tuple<std::string, int> Animal::action() {
-	if (rand() % 10 > 3)
-	{
-		if (rand() % 10 > 2)
-		{
-			if (rand() % 10 > 5)
-			{
-				int step = rand() % 100;
-				return { "move_left", step };
-			}
-			else
-			{
-				int step = rand() % 100;
-				return { "move_right", step };
-			}
-		}
-		else
-		{
-			return { "eat", 0 };
-		}
-	}
-	else return { "none", 0 };
+void Animal::expertise()
+{
+
 }
 
 void Animal::death()

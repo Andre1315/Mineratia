@@ -129,6 +129,7 @@
     <ClCompile Include="generation.cpp" />
     <ClCompile Include="Mineratia.cpp" />
     <ClCompile Include="sheep.cpp" />
+    <ClCompile Include="tags.h" />
     <ClCompile Include="wolf.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -2,6 +2,7 @@
 #include "generation.h"
 #include "sheep.h"
 #include "wolf.h"
+#include "tags.h"
 
 static void physic_animal(Sheep& sheep1, Wolf& wolf1)
 {
@@ -108,61 +109,80 @@ static void eat_animal(std::string action_sheep, Sheep& sheep1, std::string acti
 	}
 }
 
+int tag::last_id = 0;
+
 int main()
 {
-	srand(time(NULL));
+	tag WantToEat("WantToEat", "when mob wont to eat");
+	WantToEat.SetPriority(tag::priority::Hight);
 
-	int x = 50;
-	//int y = 70;
+	tag Go("Go", "when mob go", tag::priority::Low);
 
-	int y_start = 20;
-	int y_min = 28;
-	int max_sizeX = 100;
-	int max_sizeY = 30;
-	Generation gen(y_start, max_sizeX, max_sizeY);
-	gen.set_bedrock(y_min, max_sizeX);
-	gen.generation_and_rendering_level();
-	gen.set_border();
+	tag CanPass("CanPass", "soft block or transparent");
+	tag SolidBlock("SolidBlock", "soft block or transparent");
 
-	Sheep sheep_Olga(5, 15);
-	sheep_Olga.rendering_animal();
-
-	Wolf wolf_Oleg(15, 15);
-	wolf_Oleg.rendering_animal();
-
-	int age_sheep = sheep_Olga.get_age();
-	int pos_sheep = sheep_Olga.get_pos("x") + sheep_Olga.get_pos("y");
-	while (age_sheep < 6 && pos_sheep != 0)
-	{
-		physic_animal(sheep_Olga, wolf_Oleg);
+	tag Indestructible("Indestructible", "it will live forever", tag::priority::ultraHight);
 
 
+	std::cout << WantToEat.to_string() << "\n";
+	std::cout << Go.to_string() << "\n";
+	std::cout << CanPass.to_string() << "\n";
+	std::cout << SolidBlock.to_string() << "\n";
+	std::cout << Indestructible.to_string() << "\n";
 
-		std::tuple<std::string, int> result_sheep = sheep_Olga.action();
-
-		std::string action_sheep = std::get<0>(result_sheep); // первый элемент
-		int step_sheep = std::get<1>(result_sheep); // второй элемент
-
-
-
-		std::tuple<std::string, int> result_wolf = wolf_Oleg.action();
-
-		std::string action_wolf = std::get<0>(result_wolf); // первый элемент
-		int step_wolf = std::get<1>(result_wolf); // второй элемент
-
-
-
-		if (action_sheep == "move_left" || action_sheep == "move_right" || action_wolf == "move_left" || action_wolf == "move_right") move_animal("normal", action_sheep, step_sheep, sheep_Olga, action_wolf, step_wolf, wolf_Oleg, 0);
-		if (action_sheep == "eat" || action_wolf == "eat") eat_animal(action_sheep, sheep_Olga, action_wolf, wolf_Oleg);
-
-
-
-		age_sheep = sheep_Olga.get_age();
-		pos_sheep = sheep_Olga.get_pos("x") + sheep_Olga.get_pos("y");
-		Sleep(4000);
-	}
-
-	gen.clear_memory();
-
-	std::cout << "\033[" << 1 << ";" << 1 << "H";
+	//srand(time(NULL));
+	//
+	//int x = 50;
+	////int y = 70;
+	//
+	//int y_start = 20;
+	//int y_min = 28;
+	//int max_sizeX = 100;
+	//int max_sizeY = 30;
+	//Generation gen(y_start, max_sizeX, max_sizeY);
+	//gen.set_bedrock(y_min, max_sizeX);
+	//gen.generation_and_rendering_level();
+	//gen.set_border();
+	//
+	//Sheep sheep_Olga(5, 15);
+	//sheep_Olga.rendering_animal();
+	//
+	//Wolf wolf_Oleg(15, 15);
+	//wolf_Oleg.rendering_animal();
+	//
+	//int age_sheep = sheep_Olga.get_age();
+	//int pos_sheep = sheep_Olga.get_pos("x") + sheep_Olga.get_pos("y");
+	//while (age_sheep < 6 && pos_sheep != 0)
+	//{
+	//	physic_animal(sheep_Olga, wolf_Oleg);
+	//
+	//
+	//
+	//	std::tuple<std::string, int> result_sheep = sheep_Olga.action();
+	//
+	//	std::string action_sheep = std::get<0>(result_sheep); // первый элемент
+	//	int step_sheep = std::get<1>(result_sheep); // второй элемент
+	//
+	//
+	//
+	//	std::tuple<std::string, int> result_wolf = wolf_Oleg.action();
+	//
+	//	std::string action_wolf = std::get<0>(result_wolf); // первый элемент
+	//	int step_wolf = std::get<1>(result_wolf); // второй элемент
+	//
+	//
+	//
+	//	if (action_sheep == "move_left" || action_sheep == "move_right" || action_wolf == "move_left" || action_wolf == "move_right") move_animal("normal", action_sheep, step_sheep, sheep_Olga, action_wolf, step_wolf, wolf_Oleg, 0);
+	//	if (action_sheep == "eat" || action_wolf == "eat") eat_animal(action_sheep, sheep_Olga, action_wolf, wolf_Oleg);
+	//
+	//
+	//
+	//	age_sheep = sheep_Olga.get_age();
+	//	pos_sheep = sheep_Olga.get_pos("x") + sheep_Olga.get_pos("y");
+	//	Sleep(4000);
+	//}
+	//
+	//gen.clear_memory();
+	//
+	//std::cout << "\033[" << 1 << ";" << 1 << "H";
 }

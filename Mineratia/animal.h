@@ -3,6 +3,7 @@
 #include <iostream>
 #include "generation.h"
 #include <tuple>
+#include "tags.h"
 
 class Animal
 {
@@ -13,7 +14,7 @@ public:
 
 	void rendering_animal_last();
 
-	std::tuple<std::string, int> action();
+	void expertise();
 
 	int move(std::string direction);
 
@@ -30,4 +31,7 @@ public:
 private:
 	int x, y;
 	std::string texture;
+	tags internal;
+	tags external;
+	tags constants;
 };
