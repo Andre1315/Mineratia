@@ -14,7 +14,9 @@ public:
 
 	void rendering_animal_last();
 
-	void expertise();
+	std::vector<tag> expertise_primary(std::vector<tag> tag_animal);
+
+	void expertise_secondary(std::vector<tag> tag_animal);
 
 	int move(std::string direction);
 

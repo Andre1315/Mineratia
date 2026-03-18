@@ -21,7 +21,7 @@ Animal::Animal(int x_, int y_, std::string texture_) {
 	texture = texture_;
 	srand(time(NULL));
 
-	//intarnal
+	//internal
 
 	tag hunger("hunger", "the desire to eat");
 	tag sleep("sleep", "the desire to sleep", tag::ultraLow);
@@ -144,7 +144,53 @@ int Animal::get_pos(std::string arg)
 
 int Animal::eat() { return 0; }
 
-void Animal::expertise()
+std::vector<tag> Animal::expertise_primary(std::vector<tag> tag_animal)
+{
+	int n = 0;
+	tag dummy("dummy");
+	std::vector<tag> important(1, dummy);
+	important[n] = tag_animal[0];
+	for (int i = 1; i < tag_animal.size(); i++)
+	{
+		if (internal.CheckTag(tag_animal[i]) == true)
+		{
+			if (tag_animal[i] > important[n])
+			{
+				n = 0;
+				important[n] = tag_animal[i];
+			}
+			else if (tag_animal[i] < important[n])
+			{
+			}
+			else
+			{
+				important.resize(important.size() + 1);
+				n++;
+				important[n] = tag_animal[i];
+			}
+		}
+		else if (external.CheckTag(tag_animal[i]) == true)
+		{
+			if(tag_animal[i] > important[n])
+			{
+				n = 0;
+				important[n] = tag_animal[i];
+			}
+			else if (tag_animal[i] < important[n])
+			{
+			}
+			else
+			{
+				important.resize(important.size() + 1);
+				n++;
+				important[n] = tag_animal[i];
+			}
+		}
+	}
+	return important;
+}
+
+void Animal::expertise_secondary(std::vector<tag> tag_animal)
 {
 
 }
